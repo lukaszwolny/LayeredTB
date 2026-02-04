@@ -6,7 +6,7 @@ class transaction;
   bit rst;
   
   constraint ce {
-    ceAcu dist {1 := 50, 0 := 50};//50 na 50
+    ceAcu dist {1 := 3, 0 := 7};//50 na 50 1 := 50, 0 := 50
   }
   
 //   function void print();

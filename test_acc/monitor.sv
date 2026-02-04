@@ -21,7 +21,8 @@ class monitor;
       item.out = vif.monitor_cb.out;
       item.rst = vif.monitor_cb.rst;
       scb_mbx.put(item); //do mailboxa
-//       $display("[MONITOR] transfer: %0h, %0h, %0h, %0h", trans_cnt, item.in, item.ceAcu, item.out);
+      //wys: nr, dane na wej, en zapisu, dane na wyj
+      $display("[MONITOR] transfer: %0d, %0h, %0h, %0h", trans_cnt, item.in, item.ceAcu, item.out);
       trans_cnt++;
     end
   endtask

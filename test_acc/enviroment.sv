@@ -32,22 +32,6 @@ class environment;
     driv.reset();
   endtask
   
-  task post_reset();
-    $display("[POST_RESET] reset test start");
-    // Poczekaj aż monitor obsłuży reset i zapis
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    @(posedge vif.clk);
-    // Ewentualnie można sprawdzić licznik monitora, jeśli go masz
-    $display("[POST_RESET] reset test done");
-  endtask
-  
   // test acc - zapis/odczyt 
   task test();
     fork 
@@ -58,7 +42,7 @@ class environment;
     join_any
   endtask
 
-  
+  //Task dla resetu
   task test_reset();
     scb.koniec = 0;
     fork 
@@ -69,15 +53,12 @@ class environment;
     wait(rst_done.triggered);
     scb.koniec = 1;
     $display("koniec here");
-//     scb.stop_after_reset = 1;
-//     @scb.rst_done;
   endtask
   
   task post_test();
     wait(gen_done.triggered);
     wait(gen.repeat_count == driv.trans_cnt);
     wait(mon.trans_cnt == scb.trans_cnt);
-    
   endtask  
   
   //run task
@@ -96,8 +77,6 @@ class environment;
     $display("Test Reset");
     test_reset();
 
-//     post_test();
-//     post_reset();
     #10 $finish;
   endtask
   

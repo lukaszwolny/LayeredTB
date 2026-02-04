@@ -27,6 +27,6 @@ interface acc_if(
   endclocking
   
   modport driver_mode (clocking driver_cb, input clk);//, output rst
-    modport monitor_mode (clocking monitor_cb, input clk );//, input rst
+  modport monitor_mode (clocking monitor_cb, input clk );//, input rst
       
 endinterface

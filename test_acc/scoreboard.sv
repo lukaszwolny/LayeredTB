@@ -3,11 +3,10 @@ class scoreboard;
   mailbox scb_mbx;
   int trans_cnt = 0;
   
-  bit [7:0] acc_ref;//model acc
+  bit [7:0] acc_ref;//model akumulatora
   bit byl_reset;
   bit koniec;
-  event rst_done; //koniec task z rst.
-//   bit stop_after_reset = 0;
+  event rst_done; //sygnalizowanie koniec task z rst.
   
   //konstruktor
   function new(mailbox scb_mbx, event rst_done);
@@ -24,25 +23,20 @@ class scoreboard;
     forever begin
       scb_mbx.get(item);
       
-//       $display("byl reset %0h", byl_reset);
       if(koniec == 1) break;
       
-//       if(stop_after_reset) continue;
-
       //z resetem
       if(item.rst) begin
-        acc_ref <= '0;
+        acc_ref <= '0;//reset
         byl_reset = 1;
-        $display("[SCB] RESET wykryty");
+        $display("[SCOREBOARD] RESET wykryty");
       end
-      if (byl_reset) begin
+      if (byl_reset) begin //sprawedzanie czy akumulator = 0
         if (item.out !== 0)
-          $display("[SCB][RESET] ERROR out=%0h", item.out);
+          $display("[SCOREBOARD][RESET] ERROR out=%0h", item.out);
         else
-          $display("[SCB][RESET] PASS out=0");
+          $display("[SCOREBOARD][RESET] PASS out=0");
         -> rst_done;   // test z rst: koniec
-        //byl_reset = 0;
-//         continue;
          break;
       end else begin
         //zapis/odczyt
